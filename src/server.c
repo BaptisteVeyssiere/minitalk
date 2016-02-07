@@ -1,6 +1,14 @@
+/*
+** server.c for minitalk in /home/ghost/rendu/Programmation_Shell/PSU_2015_minitalk/src
+**
+** Made by Baptiste Veyssiere
+** Login   <veyssi_b@epitech.net>
+**
+** Started on  Sun Feb  7 22:36:59 2016 Baptiste Veyssiere
+** Last update Sun Feb  7 22:37:09 2016 Baptiste Veyssiere
+*/
+
 #include "server.h"
-#include <stdio.h>
-#include <unistd.h>
 
 int	signal_detect;
 
@@ -16,7 +24,7 @@ void	bit_off(UNUSED int sig)
   signal_detect += 2;
 }
 
-void	bit_addition(char bit_index, char *ascii)
+void	bit_addition(char bit_index, unsigned char *ascii)
 {
   int	i;
   int	nbr;
@@ -28,15 +36,15 @@ void	bit_addition(char bit_index, char *ascii)
   *ascii += nbr;
 }
 
-int	server()
+int		server()
 {
-  int	loop_check;
-  int	server_pid;
-  char	bit_counter;
-  char	ascii;
+  int		loop_check;
+  int		server_pid;
+  char		bit_counter;
+  unsigned char	ascii;
 
   server_pid = getpid();
-  printf("%d\n", server_pid);
+  my_put_posnbr(server_pid);
   loop_check = 1;
   bit_counter = 0;
   while (loop_check)

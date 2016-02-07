@@ -1,16 +1,16 @@
+/*
+** client.c for minitalk in /home/ghost/rendu/Programmation_Shell/PSU_2015_minitalk/src
+**
+** Made by Baptiste Veyssiere
+** Login   <veyssi_b@epitech.net>
+**
+** Started on  Sun Feb  7 22:35:55 2016 Baptiste Veyssiere
+** Last update Sun Feb  7 22:36:14 2016 Baptiste Veyssiere
+*/
+
 #include "client.h"
-#include <stdlib.h>
 
-int	my_strlen(char *s)
-{
-  int	i;
-
-  i = -1;
-  while (s[++i] != 0);
-  return (i);
-}
-
-void	byte_send(char ascii, int pid)
+void	byte_send(char pid, int ascii)
 {
   int	i;
   int	nbr;
@@ -42,7 +42,7 @@ int	client(char *str, char *pid)
   int	server_pid;
   int	i;
 
-  server_pid = atoi(pid);
+  server_pid = my_getnbr(pid);
   i = -1;
   while (++i < my_strlen(str))
     byte_send(str[i], server_pid);
