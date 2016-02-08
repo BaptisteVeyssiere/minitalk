@@ -5,12 +5,12 @@
 ## Login   <veyssi_b@epitech.net>
 ## 
 ## Started on  Sun Feb  7 22:37:48 2016 Baptiste Veyssiere
-## Last update Sun Feb  7 22:44:32 2016 Baptiste Veyssiere
+## Last update Mon Feb  8 21:24:42 2016 Baptiste Veyssiere
 ##
 
-NAME_SERVER = server
+NAME_SERVER = server/server
 
-NAME_CLIENT = client
+NAME_CLIENT = client/client
 
 DEBUG = no
 
@@ -24,12 +24,12 @@ CC = gcc
 
 RM = rm -f
 
-SRCS_SERVER = src/server.c	\
-	src/my_put_posnbr.c
+SRCS_SERVER = server/server.c	\
+	server/my_put_posnbr.c
 
-SRCS_CLIENT = src/client.c	\
-	src/my_strlen.c		\
-	src/my_getnbr.c
+SRCS_CLIENT = client/client.c	\
+	client/my_strlen.c		\
+	client/my_getnbr.c
 
 OBJS_SERVER = $(SRCS_SERVER:.c=.o)
 

@@ -5,12 +5,12 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:35:55 2016 Baptiste Veyssiere
-** Last update Sun Feb  7 22:36:14 2016 Baptiste Veyssiere
+** Last update Mon Feb  8 15:07:42 2016 Baptiste Veyssiere
 */
 
 #include "client.h"
 
-void	byte_send(char pid, int ascii)
+void	byte_send(char ascii, int pid)
 {
   int	i;
   int	nbr;
@@ -33,11 +33,11 @@ void	byte_send(char pid, int ascii)
 	}
       else
 	kill(pid, SIGUSR2);
-      usleep(1);
+      usleep(1000);
     }
 }
 
-int	client(char *str, char *pid)
+int	client(char *pid, char *str)
 {
   int	server_pid;
   int	i;
