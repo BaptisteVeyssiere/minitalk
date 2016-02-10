@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:36:59 2016 Baptiste Veyssiere
-** Last update Wed Feb 10 15:15:07 2016 Baptiste Veyssiere
+** Last update Wed Feb 10 15:22:11 2016 Baptiste Veyssiere
 */
 
 #include "server.h"
@@ -48,7 +48,6 @@ void		server(int sig)
       write(1, &ascii, 1);
       ascii = 0;
     }
-  usleep(500);
   if (kill(pid, SIGUSR1) == -1)
     {
       bit_counter = 0;
