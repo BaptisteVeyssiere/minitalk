@@ -5,32 +5,42 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:36:59 2016 Baptiste Veyssiere
-** Last update Mon Feb  8 15:02:49 2016 Baptiste Veyssiere
+** Last update Wed Feb 10 15:15:07 2016 Baptiste Veyssiere
 */
 
 #include "server.h"
 
-void	bit_addition(char bit_index, unsigned char *ascii)
-{
-  int	i;
-  int	nbr;
+int	pid;
 
-  i = 0;
-  nbr = 1;
-  while (++i < bit_index)
-    nbr *= 2;
-  *ascii += nbr;
+void		get_pid(int sig)
+{
+  static char	bit_nb = 0;
+
+  if (sig == SIGUSR1)
+    pid = ((1 << bit_nb) | pid);
+  ++bit_nb;
+  if (bit_nb == 32)
+    {
+      bit_nb = 0;
+      signal(SIGUSR1, server);
+      signal(SIGUSR2, server);
+    }
+  else
+    {
+      signal(SIGUSR1, get_pid);
+      signal(SIGUSR2, get_pid);
+    }
 }
 
 void		server(int sig)
 {
-  static char		bit_counter = 0;
-  static unsigned char	ascii = 0;
+  static char	bit_counter = 0;
+  static char	ascii = 0;
 
   signal(SIGUSR1, server);
   signal(SIGUSR2, server);
   if (sig == SIGUSR1)
-    bit_addition((8 - bit_counter), &ascii);
+    ascii = ((1 << (7 - bit_counter)) | ascii);
   ++bit_counter;
   if (bit_counter == 8)
     {
@@ -38,18 +48,24 @@ void		server(int sig)
       write(1, &ascii, 1);
       ascii = 0;
     }
+  usleep(500);
+  if (kill(pid, SIGUSR1) == -1)
+    {
+      bit_counter = 0;
+      ascii = 0;
+      pid = 0;
+      get_pid(sig);
+    }
 }
 
-int	main(UNUSED int ac, UNUSED char **av, char **env)
+int	main()
 {
-  int	pid;
+  int	server_pid;
 
-  if (env == NULL)
-    return (-1);
-  signal(SIGUSR1, server);
-  signal(SIGUSR2, server);
-  pid = getpid();
-  my_put_posnbr(pid);
+  signal(SIGUSR1, get_pid);
+  signal(SIGUSR2, get_pid);
+  server_pid = getpid();
+  my_put_posnbr(server_pid);
   while (1)
     pause();
   return (0);

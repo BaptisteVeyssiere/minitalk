@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:37:24 2016 Baptiste Veyssiere
-** Last update Sun Feb  7 22:37:27 2016 Baptiste Veyssiere
+** Last update Wed Feb 10 03:30:01 2016 Baptiste Veyssiere
 */
 
 #ifndef CLIENT_H_
@@ -17,9 +17,10 @@
 #include <sys/types.h>
 #include <signal.h>
 
-int	client(char*, char*);
+void	handler(int);
+void	client(int, char*);
 int	my_strlen(char*);
-void	byte_send(char, int);
+void	send_pid(int, int);
 int	my_getnbr(char*);
 
 #endif /* !CLIENT_H_ */
