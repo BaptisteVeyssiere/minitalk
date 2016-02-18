@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:36:59 2016 Baptiste Veyssiere
-** Last update Wed Feb 10 15:22:11 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 16:58:28 2016 Baptiste Veyssiere
 */
 
 #include "server.h"
@@ -37,8 +37,6 @@ void		server(int sig)
   static char	bit_counter = 0;
   static char	ascii = 0;
 
-  signal(SIGUSR1, server);
-  signal(SIGUSR2, server);
   if (sig == SIGUSR1)
     ascii = ((1 << (7 - bit_counter)) | ascii);
   ++bit_counter;
