@@ -5,12 +5,24 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:35:55 2016 Baptiste Veyssiere
-** Last update Thu Feb 18 20:23:17 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 20:37:18 2016 Baptiste Veyssiere
 */
 
 char	*str;
 
 #include "client.h"
+
+int	exitfunc(char *func, int mode)
+{
+  write(1, "The function ", 13);
+  write(1, func, my_strlen(func));
+  write(1, " failed\nEnd of the program\n", 27);
+  if (mode == -1)
+    exit(-1);
+  else
+    return (-1);
+  return (0);
+}
 
 void	client(int sig)
 {
@@ -35,10 +47,10 @@ void	client(int sig)
   if ((bit & 1) == 1)
     {
       if (kill(server_pid, SIGUSR1) == -1)
-	exit(-1);
+	exitfunc("kill", -1);
     }
   else if (kill(server_pid, SIGUSR2) == -1)
-    exit(-1);
+    exitfunc("kill", -1);
 }
 
 void	send_pid(int pid, int server_pid)
@@ -53,10 +65,10 @@ void	send_pid(int pid, int server_pid)
       if ((bit & 1) == 1)
 	{
 	  if (kill(server_pid, SIGUSR1) == -1)
-	    exit(-1);
+	    exitfunc("kill", -1);
 	}
       else if (kill(server_pid, SIGUSR2) == -1)
-	exit(-1);
+	exitfunc("kill", -1);
       usleep(1500);
     }
 }
@@ -68,7 +80,7 @@ int	main(int ac, char **av, char **env)
   if (ac != 3 || env == NULL)
     return (-1);
   if (signal(SIGUSR1, client) == SIG_ERR)
-    return (-1);
+    return (exitfunc("signal", 0));
   server_pid = my_getnbr(av[1]);
   if (server_pid < 1)
     return (0);

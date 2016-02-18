@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:37:24 2016 Baptiste Veyssiere
-** Last update Wed Feb 10 15:53:28 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 20:36:31 2016 Baptiste Veyssiere
 */
 
 #ifndef CLIENT_H_
@@ -23,5 +23,6 @@ void	client(int);
 int	my_strlen(char*);
 void	send_pid(int, int);
 int	my_getnbr(char*);
+int	exitfunc(char*, int);
 
 #endif /* !CLIENT_H_ */

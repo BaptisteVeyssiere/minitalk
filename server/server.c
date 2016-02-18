@@ -5,12 +5,33 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:36:59 2016 Baptiste Veyssiere
-** Last update Thu Feb 18 20:23:44 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 20:41:01 2016 Baptiste Veyssiere
 */
 
 #include "server.h"
 
 int	pid;
+
+int	my_strlen(char *s)
+{
+  int	i;
+
+  i = -1;
+  while (s[++i] != 0);
+  return (i);
+}
+
+int	exitfunc(char *func, int mode)
+{
+  write(1, "The function ", 13);
+  write(1, func, my_strlen(func));
+  write(1, " failed\nEnd of the program\n", 27);
+  if (mode == -1)
+    exit(-1);
+  else
+    return (-1);
+  return (0);
+}
 
 void		get_pid(int sig)
 {
@@ -24,11 +45,11 @@ void		get_pid(int sig)
       bit_nb = 0;
       if (signal(SIGUSR1, server) == SIG_ERR ||
 	  signal(SIGUSR2, server) == SIG_ERR)
-	exit(-1);
+	exitfunc("signal", -1);
     }
   else if (signal(SIGUSR1, get_pid) == SIG_ERR ||
 	   signal(SIGUSR2, get_pid) == SIG_ERR)
-    exit(-1);
+    exitfunc("signal", -1);
 }
 
 void		server(int sig)
@@ -60,7 +81,7 @@ int	main()
 
   if (signal(SIGUSR1, get_pid) == SIG_ERR ||
       signal(SIGUSR2, get_pid) == SIG_ERR)
-    return (-1);
+    return (exitfunc("signal", 0));
   server_pid = getpid();
   my_put_posnbr(server_pid);
   while (1)
