@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:35:55 2016 Baptiste Veyssiere
-** Last update Thu Feb 18 17:00:11 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 20:23:17 2016 Baptiste Veyssiere
 */
 
 char	*str;
@@ -33,9 +33,12 @@ void	client(int sig)
   if (bit_pos == -1)
     bit_pos = 7;
   if ((bit & 1) == 1)
-    kill(server_pid, SIGUSR1);
-  else
-    kill(server_pid, SIGUSR2);
+    {
+      if (kill(server_pid, SIGUSR1) == -1)
+	exit(-1);
+    }
+  else if (kill(server_pid, SIGUSR2) == -1)
+    exit(-1);
 }
 
 void	send_pid(int pid, int server_pid)
@@ -46,11 +49,14 @@ void	send_pid(int pid, int server_pid)
   bit_pos = -1;
   while (++bit_pos < 32)
     {
-      bit = ((1 << bit_pos) & pid) >> bit_pos;
-      if (bit == 1)
-	kill(server_pid, SIGUSR1);
-      else
-	kill(server_pid, SIGUSR2);
+      bit = pid >> bit_pos;
+      if ((bit & 1) == 1)
+	{
+	  if (kill(server_pid, SIGUSR1) == -1)
+	    exit(-1);
+	}
+      else if (kill(server_pid, SIGUSR2) == -1)
+	exit(-1);
       usleep(1500);
     }
 }
@@ -61,7 +67,8 @@ int	main(int ac, char **av, char **env)
 
   if (ac != 3 || env == NULL)
     return (-1);
-  signal(SIGUSR1, client);
+  if (signal(SIGUSR1, client) == SIG_ERR)
+    return (-1);
   server_pid = my_getnbr(av[1]);
   if (server_pid < 1)
     return (0);

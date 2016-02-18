@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:36:59 2016 Baptiste Veyssiere
-** Last update Thu Feb 18 16:58:28 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 20:23:44 2016 Baptiste Veyssiere
 */
 
 #include "server.h"
@@ -22,14 +22,13 @@ void		get_pid(int sig)
   if (bit_nb == 32)
     {
       bit_nb = 0;
-      signal(SIGUSR1, server);
-      signal(SIGUSR2, server);
+      if (signal(SIGUSR1, server) == SIG_ERR ||
+	  signal(SIGUSR2, server) == SIG_ERR)
+	exit(-1);
     }
-  else
-    {
-      signal(SIGUSR1, get_pid);
-      signal(SIGUSR2, get_pid);
-    }
+  else if (signal(SIGUSR1, get_pid) == SIG_ERR ||
+	   signal(SIGUSR2, get_pid) == SIG_ERR)
+    exit(-1);
 }
 
 void		server(int sig)
@@ -59,8 +58,9 @@ int	main()
 {
   int	server_pid;
 
-  signal(SIGUSR1, get_pid);
-  signal(SIGUSR2, get_pid);
+  if (signal(SIGUSR1, get_pid) == SIG_ERR ||
+      signal(SIGUSR2, get_pid) == SIG_ERR)
+    return (-1);
   server_pid = getpid();
   my_put_posnbr(server_pid);
   while (1)

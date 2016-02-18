@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:37:36 2016 Baptiste Veyssiere
-** Last update Wed Feb 10 02:48:05 2016 Baptiste Veyssiere
+** Last update Thu Feb 18 20:19:42 2016 Baptiste Veyssiere
 */
 
 #ifndef SERVER_H_
@@ -15,6 +15,7 @@
 #define _DEFAULT_SOURCE
 #include <signal.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 void	server(int);
 void	my_put_posnbr(int);
