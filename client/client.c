@@ -5,7 +5,7 @@
 ** Login   <veyssi_b@epitech.net>
 **
 ** Started on  Sun Feb  7 22:35:55 2016 Baptiste Veyssiere
-** Last update Thu Feb 18 20:37:18 2016 Baptiste Veyssiere
+** Last update Fri Feb 19 17:55:02 2016 Baptiste Veyssiere
 */
 
 char	*str;
@@ -69,7 +69,7 @@ void	send_pid(int pid, int server_pid)
 	}
       else if (kill(server_pid, SIGUSR2) == -1)
 	exitfunc("kill", -1);
-      usleep(1500);
+      usleep(100);
     }
 }
 
